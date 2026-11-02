@@ -91,3 +91,10 @@ jobs:
           echo "IMAGE=${IMAGE}" >> "$GITHUB_STEP_SUMMARY"
           echo "TAG=run-${{ github.run_id }}" >> "$GITHUB_STEP_SUMMARY"
           echo "Pull with: docker pull ${IMAGE}:latest" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Make image public
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api --method PATCH "/user/packages/container/${{ github.event.repository.name }}" \
+            -f visibility=public || true
