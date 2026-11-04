@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab Guide</title>
+<style>
+body {
+  font-family: 'Segoe UI', Calibri, Arial, sans-serif;
+  margin: 0;
+  color: #0f172a;
+  background: #f8fafc;
+  line-height: 1.65;
+}
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+.hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 55%, #2563eb 100%);
+  color: white;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.18);
+}
+.hero h1 {
+  margin: 0 0 12px;
+  font-size: 2.2rem;
+}
+.hero p {
+  margin: 0;
+  max-width: 920px;
+  color: rgba(255,255,255,0.92);
+}
+.meta-row, .stats-grid, .card-grid, .asset-grid, .prompt-grid {
+  display: grid;
+  gap: 16px;
+}
+.meta-row {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: 18px;
+}
+.meta-card, .stat-card, .card, .asset-card, .prompt-card {
+  background: white;
+  border: 1px solid #dbe4ee;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+.meta-card strong, .stat-card strong, .asset-card strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #1e3a5f;
+}
+.section {
+  margin-top: 28px;
+}
+.section h2 {
+  margin: 0 0 12px;
+  color: #0f172a;
+  font-size: 1.45rem;
+}
+.section h3 {
+  color: #1e3a5f;
+  margin-top: 1.25em;
+}
+.stats-grid {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+.stat-card .value {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #2563eb;
+}
+.card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.asset-grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+.asset-card a, .prompt-card a, .inline-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+}
+.asset-card a:hover, .prompt-card a:hover, .inline-link:hover {
+  text-decoration: underline;
+}
+.badge {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin: 0 8px 8px 0;
+}
+.badge.green { background: #dcfce7; color: #15803d; }
+.badge.amber { background: #fef3c7; color: #b45309; }
+.badge.purple { background: #f3e8ff; color: #7e22ce; }
+.table-wrap {
+  overflow-x: auto;
+  background: white;
+  border-radius: 18px;
+  border: 1px solid #dbe4ee;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th, td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: top;
+}
+th {
+  background: #0f172a;
+  color: white;
+}
+tr:nth-child(even) td {
+  background: #f8fafc;
+}
+pre {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 16px 18px;
+  border-radius: 14px;
+  overflow-x: auto;
+}
+code {
+  background: #e2e8f0;
+  padding: 2px 6px;
+  border-radius: 5px;
+}
+pre code {
+  background: transparent;
+  padding: 0;
+}
+blockquote {
+  margin: 1em 0;
+  padding: 12px 18px;
+  border-left: 4px solid #2563eb;
+  background: #eff6ff;
+  border-radius: 0 12px 12px 0;
+}
+.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.toc a {
+  background: white;
+  border: 1px solid #dbe4ee;
+  border-radius: 999px;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #1e3a5f;
+  font-weight: 600;
+}
+.slide-block {
+  background: white;
+  border: 1px solid #dbe4ee;
+  border-radius: 18px;
+  padding: 22px;
+  margin: 18px 0;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+.slide-block h3 {
+  margin-top: 0;
+}
+.cue {
+  display: block;
+  margin: 10px 0 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.97rem;
+}
+.cue.ask { background: #fff7ed; border-left: 4px solid #f97316; }
+.cue.demo { background: #eff6ff; border-left: 4px solid #2563eb; }
+.cue.transition { background: #f5f3ff; border-left: 4px solid #7c3aed; }
+.dashboard-hero {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 18px;
+}
+.panel {
+  background: white;
+  border: 1px solid #dbe4ee;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+.panel h3 {
+  margin-top: 0;
+}
+.timeline {
+  display: grid;
+  gap: 12px;
+}
+.timeline-step {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 14px;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+.teleprompter-link {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: #0f172a;
+  color: white !important;
+  border-radius: 12px;
+}
+.form-shell, .certificate-shell {
+  background: white;
+  border-radius: 22px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  border: 1px solid #dbe4ee;
+}
+.field-row {
+  margin: 18px 0;
+}
+.field-row label {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 8px;
+}
+.field-row textarea, .field-row input {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 12px;
+  font: inherit;
+}
+.rating-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+.rating-grid label {
+  background: #f8fafc;
+  border: 1px solid #dbe4ee;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+.print-btn {
+  display: inline-block;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+}
+@media print {
+  body { background: white; }
+  .page { padding: 0; }
+  .hero, .panel, .slide-block, .card, .asset-card, .meta-card, .stat-card, .form-shell, .certificate-shell {
+    box-shadow: none;
+  }
+  .no-print { display: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="page"><div class="hero"><h1>Lab Guide</h1><p>Student lab for <strong>mahan0227/mlops-student</strong>. Watch the recording first, then complete the checkpoints in a browser. Nothing is installed on your laptop.</p><p style="margin-top:14px"><a class="teleprompter-link" href="demo-player.html">Open the walkthrough video</a></p></div><section class="section"><h1 id="lab-and-demo-introduction-to-mlops">Lab And Demo: Introduction to MLOps</h1>
+<p>Everything in this guide runs in a web browser. You do not install Python, Docker,
+Git, or Jenkins. You need:</p>
+<ul>
+<li>a free GitHub account</li>
+<li>a modern browser</li>
+<li>optional for the last checkpoints: a free Killercoda login (sign in with GitHub or Google)</li>
+</ul>
+<p>The starter code lives at:</p>
+<p>https://github.com/mahan0227/mlops-student</p>
+<p>The online workflow students paste is in this bundle:</p>
+<p><code>online-lab/mlops-online.yml</code></p>
+<h2 id="part-a-instructor-demo-runbook">Part A: Instructor Demo Runbook</h2>
+<h3 id="demo-goal">Demo goal</h3>
+<p>Show one complete ML lifecycle in the browser: fork, generate data, drop PII, train,
+publish a container to GHCR, call <code>/predict</code> in Killercoda, then roll back to a previous tag.</p>
+<h3 id="before-the-session">Before the session</h3>
+<ol>
+<li>Fork the student repo on a demo account and replace the workflow with <code>online-lab/mlops-online.yml</code>.</li>
+<li>Confirm the Actions run is green and the GHCR package is <strong>public</strong>.</li>
+<li>Sign in to Killercoda and open the Docker playground once so the login is cached.</li>
+<li>Confirm <code>demo-walkthrough.mp4</code> opens in <code>demo-player.html</code>.</li>
+<li>Open <code>walkthrough-guide.html</code> in a second tab.</li>
+</ol>
+<h3 id="play-the-recording-first">Play the recording first</h3>
+<p>Play <code>demo-walkthrough.mp4</code> full screen before anyone types. Pause a chapter while the room
+catches up. Students repeat the same browser steps. The written steps below match the video.</p>
+<h3 id="demo-steps-about-16-minutes">Demo steps (about 16 minutes)</h3>
+<ol>
+<li>Open the public starter repo. Press <code>.</code> to show github.dev. Nobody installed an editor.</li>
+<li>Show <code>src/data_prep.py</code> dropping <code>email</code>, <code>phone</code>, and <code>customer_id</code>.</li>
+<li>Show <code>.github/workflows/mlops-online.yml</code> after it has been replaced by the online workflow.</li>
+<li>Open Actions. Walk generate → PII printout → clean columns → train → tests → push to GHCR.</li>
+<li>Download or expand the <code>model-bundle</code> artifact and open <code>metrics.json</code>.</li>
+<li>Open the package page. Show the <code>latest</code> tag and the <code>run-</code> tag.</li>
+<li>In Killercoda, pull the image, run it, and curl <code>/health</code>, <code>/version</code>, and <code>/predict</code>.</li>
+<li>Pull the previous <code>run-</code> tag and show <code>/version</code> change. That is rollback.</li>
+</ol>
+<h3 id="talking-points">Talking points</h3>
+<ul>
+<li>PII never reaches the model. The log proves it.</li>
+<li>The version string is the contract between training and serving.</li>
+<li>Tests are the gate before the image is published.</li>
+<li>Rollback is a previous tag, not a rewrite.</li>
+</ul>
+<h3 id="fallback">Fallback</h3>
+<p>If GitHub or Killercoda fails, stay on the recording. Play with Docker is the terminal fallback.</p>
+<h2 id="part-b-guided-lab-for-students">Part B: Guided Lab for Students</h2>
+<h3 id="lab-title">Lab title</h3>
+<p>From a public fork to a live <code>/predict</code> API, with nothing installed</p>
+<h3 id="objective">Objective</h3>
+<p>Fork the student workshop repo, run the lifecycle on GitHub Actions, publish the image,
+and prove the API in a browser terminal.</p>
+<h3 id="lab-map-and-checkpoints">Lab map and checkpoints</h3>
+<table>
+<thead>
+<tr>
+<th>Checkpoint</th>
+<th>You will</th>
+<th>Success signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Fork the starter repo as public</td>
+<td>Your copy exists under your username</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Paste the online workflow and commit</td>
+<td>Actions tab shows a run starting</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Read the PII and clean-column logs</td>
+<td>Raw has email; clean does not</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Read a green run and the artifacts</td>
+<td>Tests green; <code>metrics.json</code> visible</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Make the GHCR package public</td>
+<td>Package visibility is Public</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Pull and call <code>/predict</code> in Killercoda</td>
+<td>JSON with prediction and probability</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Pull the previous tag</td>
+<td><code>/version</code> matches the older run</td>
+</tr>
+</tbody>
+</table>
+<p>Work in pairs if you like, but each person must commit at least once.</p>
+<hr>
+<h3 id="checkpoint-1-fork-the-starter-repository">Checkpoint 1: Fork the starter repository</h3>
+<ol>
+<li>Sign in at github.com.</li>
+<li>Open https://github.com/mahan0227/mlops-student</li>
+<li>Click <strong>Fork</strong>. Keep it <strong>Public</strong>. Do not tick extra branches unless you want them.</li>
+<li>Click <strong>Create fork</strong>.</li>
+</ol>
+<p>Success signal: the browser shows <code>YOUR_USER/mlops-student</code>.</p>
+<hr>
+<h3 id="checkpoint-2-paste-the-online-workflow">Checkpoint 2: Paste the online workflow</h3>
+<p>The starter repo can train on a laptop. Today we replace the workflow so GitHub does the work.</p>
+<ol>
+<li>On your fork, press <code>.</code> (the period key). github.dev opens.</li>
+<li>Open <code>.github/workflows/mlops-online.yml</code>.</li>
+<li>Select all and replace it with the file from <code>online-lab/mlops-online.yml</code> in this bundle (also pasted in <code>walkthrough-guide.html</code>).</li>
+<li>Open Source Control. Commit message: <code>Run the MLOps lifecycle on GitHub Actions</code>. Click <strong>Commit &amp; Push</strong>.</li>
+<li>If GitHub asks you to enable Actions on the fork, click <strong>I understand my workflows, go ahead and enable them</strong>, then re-run the workflow from the Actions tab.</li>
+</ol>
+<p>Success signal: the Actions tab shows a run named <code>mlops-online</code>.</p>
+<hr>
+<h3 id="checkpoint-3-read-the-pii-checkpoint-in-the-logs">Checkpoint 3: Read the PII checkpoint in the logs</h3>
+<ol>
+<li>Open the run. Click the <code>mlops</code> job.</li>
+<li>Open <strong>Generate synthetic data</strong>. Find <code>RAW COLUMNS</code> and the three email rows.</li>
+<li>Open <strong>Data prep (drop PII)</strong>. Find <code>CLEAN COLUMNS</code> and the line <code>PII columns are gone.</code></li>
+</ol>
+<p>Success signal: you can point to <code>email</code> in the raw log and its absence in the clean log.</p>
+<hr>
+<h3 id="checkpoint-4-read-the-green-run-and-the-model-bundle">Checkpoint 4: Read the green run and the model bundle</h3>
+<ol>
+<li>Confirm <strong>Unit tests</strong> is green. That is the quality gate.</li>
+<li>Confirm <strong>Build and push image</strong> is green.</li>
+<li>In the run summary, download the <code>model-bundle</code> artifact and open <code>metrics.json</code> and <code>metadata.json</code>.</li>
+</ol>
+<p>Success signal: you can say the <code>version</code> and the <code>roc_auc</code> out loud.</p>
+<hr>
+<h3 id="checkpoint-5-make-the-package-public">Checkpoint 5: Make the package public</h3>
+<ol>
+<li>On the repository page, click <strong>Packages</strong>.</li>
+<li>Open the image. Click <strong>Package settings</strong>.</li>
+<li>Under Danger Zone, change visibility to <strong>Public</strong>.</li>
+</ol>
+<p>If you skip this, Killercoda will say <code>pull access denied</code>.</p>
+<p>Success signal: a visitor who is not logged in can see the package.</p>
+<hr>
+<h3 id="checkpoint-6-call-the-api-in-killercoda">Checkpoint 6: Call the API in Killercoda</h3>
+<ol>
+<li>Open https://killercoda.com/playgrounds/scenario/docker and start the scenario. Sign in with GitHub if asked.</li>
+<li>Replace <code>YOUR_USER</code> with your GitHub username, in lowercase:</li>
+</ol>
+<pre><code class="language-bash">docker pull ghcr.io/YOUR_USER/mlops-student:latest
+docker run -d -p 8000:8000 --name ml-prod ghcr.io/YOUR_USER/mlops-student:latest
+curl -s http://localhost:8000/health
+curl -s http://localhost:8000/version
+curl -s -X POST http://localhost:8000/predict \
+  -H &quot;Content-Type: application/json&quot; \
+  -d '{&quot;transaction_id&quot;:&quot;tx_000000&quot;,&quot;age&quot;:42,&quot;country&quot;:&quot;US&quot;,&quot;device_type&quot;:&quot;mobile&quot;,&quot;transaction_amount&quot;:250.5,&quot;hour_of_day&quot;:13,&quot;num_prev_txns&quot;:3,&quot;is_international&quot;:0}'
+</code></pre>
+<p>Success signal: JSON with <code>model_version</code>, <code>prediction</code>, and <code>probability</code>.</p>
+<p>If Killercoda is full, use https://labs.play-with-docker.com and the same commands.</p>
+<hr>
+<h3 id="checkpoint-7-roll-back-to-a-previous-tag">Checkpoint 7: Roll back to a previous tag</h3>
+<p>After a second green run you will have <code>latest</code> plus two <code>run-</code> tags.</p>
+<pre><code class="language-bash">docker pull ghcr.io/YOUR_USER/mlops-student:run-PREVIOUS_ID
+docker rm -f ml-prod
+docker run -d -p 8000:8000 --name ml-prod ghcr.io/YOUR_USER/mlops-student:run-PREVIOUS_ID
+curl -s http://localhost:8000/version
+</code></pre>
+<p>Success signal: <code>model_version</code> matches the older run, not the newest one.</p>
+<p>To create the second run without changing code, open Actions → <code>mlops-online</code> → <strong>Run workflow</strong>.</p>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Actions tab is empty</td>
+<td>Workflows disabled on the fork</td>
+<td>Enable Actions, then Run workflow</td>
+</tr>
+<tr>
+<td>YAML error at the start</td>
+<td>Indentation or tabs</td>
+<td>Re-paste the file from the guide</td>
+</tr>
+<tr>
+<td>Red at Unit tests</td>
+<td>Training or schema failed</td>
+<td>Read the first red step, not the last</td>
+</tr>
+<tr>
+<td><code>denied</code> when pushing the image</td>
+<td>Package write permission</td>
+<td>Confirm the workflow <code>permissions: packages: write</code></td>
+</tr>
+<tr>
+<td><code>pull access denied</code> in Killercoda</td>
+<td>Package is still private</td>
+<td>Package settings → Public</td>
+</tr>
+<tr>
+<td><code>400 Missing feature fields</code></td>
+<td>Predict payload incomplete</td>
+<td>Copy the payload from this guide</td>
+</tr>
+<tr>
+<td>Killercoda will not start</td>
+<td>Session or login</td>
+<td>Sign in with GitHub, or use Play with Docker</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cleanup">Cleanup</h3>
+<p>Nothing is installed on the laptop. You may delete the Killercoda session. Keep the fork.</p></section></div>
+
+</body>
+</html>
